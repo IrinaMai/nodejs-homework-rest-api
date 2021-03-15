@@ -38,9 +38,7 @@ const addContact = async (body) => {
   const corrList = JSON.parse(list.toString());
   corrList.push(oneContact);
   const newList = await fs.writeFile(contactsPath, JSON.stringify(corrList));
-  const myNewList = await fs.readFile(contactsPath);
-  const newCorrList = JSON.parse(myNewList.toString());
-  const lastOne = newCorrList[newCorrList.length - 1];
+  const lastOne = corrList[corrList.length - 1];
   return lastOne;
 };
 
@@ -54,7 +52,7 @@ const updateContact = async ({ contactId }, body) => {
       item.id == contactId ? corrContact : item
     );
     await fs.writeFile(contactsPath, JSON.stringify(newCorrList));
-    return corrContact;
+    return oneContact;
   } else {
     return false;
   }
