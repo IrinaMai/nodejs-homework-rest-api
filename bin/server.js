@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const dbUri = process.env.DB_URL;
-
+// const secret = process.env.SECRET_KEY;
 const PORT = process.env.PORT || 3000;
 
 const connection = mongoose.connect(dbUri, {
