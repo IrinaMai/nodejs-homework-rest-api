@@ -1,6 +1,5 @@
 // const Contact = require(".");
 
-
 // const listContacts = async (req, res, next) => {
 //   try {
 //     const list = await Contact.find();

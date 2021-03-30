@@ -1,6 +1,6 @@
 // const passport = require('passport')
 const User = require('../servise/schemas/users')
-const { addUser, findUserByEmail } = require('../servise/users')
+const { addUser, findUserByEmail, findUserById} = require('../servise/users')
 
 const add = async (req, res, next) => {
   const { userName, userEmail, password } = req.body
@@ -26,6 +26,12 @@ const add = async (req, res, next) => {
 }
 
 const current = async (req, res, next) => {
-  console.log(req.user)
+    const { _id } = req.user[0]
+  const result = await findUserById(_id)
+  res.json({
+    status: 'success',
+    code: 204,
+    data: result
+  })
 }
 module.exports = { add, current }
