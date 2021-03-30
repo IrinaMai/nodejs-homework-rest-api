@@ -1,7 +1,5 @@
-// const passport = require('passport')
-// require('../config/passport')
 const jwt = require('jsonwebtoken')
-const { findUserByEmail, addTokenToUser } = require('../servise/users')
+const { findUserByEmail, findUserAndUpdate } = require('../servise/users')
 const dotenv = require('dotenv')
 dotenv.config()
 const { SECRET_KEY } = process.env
@@ -22,7 +20,7 @@ const logInUser = async (req, res, next) => {
     const payload = { _id: user.id }
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
 
-    const result = await addTokenToUser(user.id, { token })
+    const result = await findUserAndUpdate(user.id, { token })
     res.json({
       status: 'success',
       code: 200,
@@ -39,7 +37,7 @@ const logInUser = async (req, res, next) => {
 
 const logOutUser = async (req, res, next) => {
   const { _id } = req.user[0]
-  const user = await addTokenToUser(_id, null)
+  const user = await findUserAndUpdate(_id, {token: null})
   if(!user) {
     res.status(401).json({
     status: 'faile',

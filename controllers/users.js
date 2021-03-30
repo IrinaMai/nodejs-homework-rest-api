@@ -1,4 +1,3 @@
-// const passport = require('passport')
 const User = require('../servise/schemas/users')
 const { addUser, findUserByEmail, findUserById} = require('../servise/users')
 

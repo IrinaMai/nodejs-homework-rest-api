@@ -2,9 +2,9 @@ const { getAllContacts, getContactById, addContact, removeContact, updateContact
 const { isLogged } = require('./auth')
 
 const get = async (req, res, next) => {
-  const { query = {} } = req
+     const userId = req.user[0]._id
   try {
-    const list = await getAllContacts(query)
+    const list = await getAllContacts(userId, req.query)
     res.json({ status: 'success', code: 200, data: { result: list } })
   } catch (e) {
     next(e)
@@ -12,9 +12,10 @@ const get = async (req, res, next) => {
 }
 
 const getById = async (req, res, next) => {
+  const userId = req.user[0]._id
   const { id } = req.params
   try {
-    const contact = await getContactById(id)
+    const contact = await getContactById(userId, id)
     if (contact) {
       res.json({ status: 'success', code: 200, data: contact })
     } else {
@@ -26,9 +27,9 @@ const getById = async (req, res, next) => {
 }
 
 const add = async (req, res, next) => {
-  const { body } = req
+  const userId = req.user[0]._id
   try {
-    const contact = await addContact(body)
+    const contact = await addContact(userId, req.body)
     res.json({ status: 'success', code: 201, data: contact })
   } catch (e) {
     next(e)
@@ -36,9 +37,10 @@ const add = async (req, res, next) => {
 }
 
 const remove = async (req, res, next) => {
+  const userId = req.user[0]._id
   const { id } = req.params
   try {
-    const removed = await removeContact(id)
+    const removed = await removeContact(userId, id)
     if (removed) {
       res.json({ status: 'success', code: 200, message: 'Contact Deleted' })
     } else {
@@ -50,10 +52,10 @@ const remove = async (req, res, next) => {
 }
 
 const update = async (req, res, next) => {
+   const userId = req.user[0]._id
   const { id } = req.params
-  const { body } = req
-  try {
-    const contact = await updateContact(id, body)
+   try {
+    const contact = await updateContact(userId, id, req.body)
     if (contact) {
       res.json({ status: 'success', code: 200, data: contact })
     } else {

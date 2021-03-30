@@ -13,8 +13,8 @@ const findUserById = (id) => {
   return User.findOne(id)
 }
 
-const addTokenToUser = (id, token) => {
+const findUserAndUpdate = (id, token) => {
   return User.findByIdAndUpdate(id, token, { new: true })
 }
 
-module.exports = { addUser, findUserByEmail, addTokenToUser, findUserById }
+module.exports = { addUser, findUserByEmail, findUserAndUpdate, findUserById }
