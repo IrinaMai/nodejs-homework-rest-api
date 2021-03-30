@@ -27,11 +27,23 @@ const add = async (req, res, next) => {
 
 const current = async (req, res, next) => {
     const { _id } = req.user[0]
-  const result = await findUserById(_id)
+  const user = await findUserById(_id)
+  if(!user) {
+    res.status(401).json({
+    status: 'faile',
+    code: 401,
+    message: "Not authorized"
+  })
+  }
   res.json({
     status: 'success',
     code: 204,
-    data: result
+    data: {
+      userEmail: user.userEmail,
+      subscription: user.subscription
+    }
   })
 }
+
+
 module.exports = { add, current }

@@ -39,11 +39,18 @@ const logInUser = async (req, res, next) => {
 
 const logOutUser = async (req, res, next) => {
   const { _id } = req.user[0]
-  const result = await addTokenToUser(_id, null)
+  const user = await addTokenToUser(_id, null)
+  if(!user) {
+    res.status(401).json({
+    status: 'faile',
+    code: 401,
+    message: "Not authorized"
+  })
+  }
   res.json({
     status: 'success',
     code: 204,
-    data: result
+   message: "No token"
   })
 }
 
