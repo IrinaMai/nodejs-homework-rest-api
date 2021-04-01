@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit')
 const app = express()
 // const flash = require('connect-flash')
 
-const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
+// const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 50
