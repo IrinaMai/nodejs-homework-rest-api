@@ -11,29 +11,28 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }
 
-
 passport.use(
   new Strategy(jwtOptions, async (payload, done) => {
     try {
-    const user = await User.find({ _id: payload._id })
-        if (!user) {
-          return done(new Error('User not found'))
-        }
-        return done(null, user)
-      }catch(err) { done(err)}
-  }),
+      const user = await User.find({ _id: payload._id })
+      if (!user) {
+        return done(new Error('User not found'))
+      }
+      return done(null, user)
+    } catch (err) { done(err) }
+  })
 )
 
 const isLogged = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
-    if (!user || err) {
+      if (!user || err || !req.headers.authorization.includes(user[0].token)) {
       return res.status(401).json({
         status: 'error',
         code: 401,
-        message: 'Unauthorized',
-        data: 'Unauthorized',
+        message: 'Unauthorized'
       })
     }
+
     req.user = user
     next()
   })(req, res, next)

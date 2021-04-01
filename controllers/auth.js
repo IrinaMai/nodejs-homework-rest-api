@@ -37,18 +37,18 @@ const logInUser = async (req, res, next) => {
 
 const logOutUser = async (req, res, next) => {
   const { _id } = req.user[0]
-  const user = await findUserAndUpdate(_id, {token: null})
-  if(!user) {
+  const user = await findUserAndUpdate(_id, { token: null })
+  if (!user) {
     res.status(401).json({
-    status: 'faile',
-    code: 401,
-    message: "Not authorized"
-  })
+      status: 'faile',
+      code: 401,
+      message: 'Not authorized'
+    })
   }
   res.json({
     status: 'success',
     code: 204,
-   message: "No token"
+    message: 'No token'
   })
 }
 

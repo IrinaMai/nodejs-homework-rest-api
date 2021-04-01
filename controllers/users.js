@@ -1,5 +1,5 @@
 const User = require('../servise/schemas/users')
-const { addUser, findUserByEmail, findUserById} = require('../servise/users')
+const { addUser, findUserByEmail, findUserById, findUserAndUpdate } = require('../servise/users')
 
 const add = async (req, res, next) => {
   const { userName, userEmail, password } = req.body
@@ -25,14 +25,14 @@ const add = async (req, res, next) => {
 }
 
 const current = async (req, res, next) => {
-    const { _id } = req.user[0]
+  const { _id } = req.user[0]
   const user = await findUserById(_id)
-  if(!user) {
+  if (!user) {
     res.status(401).json({
-    status: 'faile',
-    code: 401,
-    message: "Not authorized"
-  })
+      status: 'faile',
+      code: 401,
+      message: 'Not authorized'
+    })
   }
   res.json({
     status: 'success',
@@ -44,5 +44,31 @@ const current = async (req, res, next) => {
   })
 }
 
+const updateUser = async (req, res, next) => {
+  const { _id } = req.user[0]
+  try {
+    const user = await findUserAndUpdate(_id, req.body)
+    if (user) {
+      res.json({
+        status: 'success',
+        code: 201,
+        data: {
+          userName: user.userName,
+          userEmail: user.userEmail,
+          subscription: user.subscription
+        }
+      })
+    }
+    if (!user) {
+      res.status(401).json({
+        status: 'faile',
+        code: 401,
+        message: 'Not authorized'
+      })
+    }
+  } catch (e) {
+    next(e)
+  }
+}
 
-module.exports = { add, current }
+module.exports = { add, current, updateUser }

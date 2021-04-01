@@ -2,7 +2,7 @@ const { getAllContacts, getContactById, addContact, removeContact, updateContact
 const { isLogged } = require('./auth')
 
 const get = async (req, res, next) => {
-     const userId = req.user[0]._id
+  const userId = req.user[0]._id
   try {
     const list = await getAllContacts(userId, req.query)
     res.json({ status: 'success', code: 200, data: { result: list } })
@@ -52,9 +52,9 @@ const remove = async (req, res, next) => {
 }
 
 const update = async (req, res, next) => {
-   const userId = req.user[0]._id
+  const userId = req.user[0]._id
   const { id } = req.params
-   try {
+  try {
     const contact = await updateContact(userId, id, req.body)
     if (contact) {
       res.json({ status: 'success', code: 200, data: contact })
