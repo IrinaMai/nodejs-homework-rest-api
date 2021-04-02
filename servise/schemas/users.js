@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const bCrypt = require('bcryptjs')
+const gravatar = require('gravatar');
 
 const userSchema = new Schema({
   userName: {
@@ -31,8 +32,17 @@ const userSchema = new Schema({
   token: {
     type: String,
     default: null
-  }
+  },
+  avatar: {
+    type: String,
+    default() {
+     return gravatar.url(this.userEmail, { s:"250" }, true);
+    },
+  },
 })
+
+
+
 
 userSchema.methods.setPassword = function (password) {
   this.password = bCrypt.hashSync(password, bCrypt.genSaltSync(6))

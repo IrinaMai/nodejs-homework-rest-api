@@ -14,9 +14,9 @@ const add = async (req, res, next) => {
     res.json({
       status: 'success',
       code: 201,
-      data: {
-        userName: result.userName,
-        userEmail: result.userEmail
+      data: {result
+        // userName: result.userName,
+        // userEmail: result.userEmail
       }
     })
   } catch (e) {
