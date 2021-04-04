@@ -1,8 +1,8 @@
 const app = require('../app')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const fs = require("fs").promises
-const path = require("path")
+const fs = require('fs').promises
+const path = require('path')
 const multer = require('multer')
 const { DB_URL, CLOUD_NAME, API_KEY, API_SECRET, UPLOAD, IMG } = process.env
 
@@ -11,16 +11,16 @@ const PUBLIC_DIR = path.join(process.cwd(), IMG)
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, UPLOAD_DIR )
+    cb(null, UPLOAD_DIR)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
   }
 })
 
-// const upload = multer({ 
+// const upload = multer({
 //   storage: storage
-//   // limits: 2000000, 
+//   // limits: 2000000,
 // //   fileFilter: (req, file, cb) => {
 // //   if(file.mimetype.includes("image")) {
 // //   cb(null, true)
@@ -45,25 +45,23 @@ const connection = mongoose.connect(DB_URL, {
   useFindAndModify: false
 })
 
-const isFolder = (folder)  => {
+const isFolder = (folder) => {
   return fs.access(folder).then(() => true).catch(() => false)
 }
 
-const createFolder = async(folder)  => {
-  if(!await isFolder(folder)) {
+const createFolder = async (folder) => {
+  if (!await isFolder(folder)) {
     await fs.mkdir(folder)
-   
- } else {
-   return 
- }
-}
+  } else {
 
+  }
+}
 
 connection
   .then(() => {
     app.listen(PORT, async () => {
       createFolder(UPLOAD_DIR)
-     createFolder(PUBLIC_DIR)
+      createFolder(PUBLIC_DIR)
       console.log(
         `Server running. Use API on port: ${PORT}. Database connection successful`
       )
