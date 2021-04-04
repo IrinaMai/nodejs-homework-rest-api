@@ -1,18 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const Contact = require("../../servise/schemas/tasks");
-const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-} = require("../../servise/index");
+const express = require('express')
+const router = express.Router()
+const { get, getById, add, remove, update } = require('../../controllers/contacts')
+const isLogged = require('../../config/passport')
 
-router.get("/", listContacts);
-router.get("/:id", getContactById);
-router.post("/", addContact);
-router.delete("/:id", removeContact);
-router.patch("/:id", updateContact);
+router.get('/', isLogged, get)
+router.get('/:id', isLogged, getById)
+router.post('/', isLogged, add)
+router.delete('/:id', isLogged, remove)
+router.patch('/:id', isLogged, update)
 
-module.exports = router;
+module.exports = router
