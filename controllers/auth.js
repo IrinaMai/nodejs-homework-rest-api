@@ -27,7 +27,8 @@ const logInUser = async (req, res, next) => {
       token: token,
       data: {
         userEmail: result.userEmail,
-        subscription: result.subscription
+        subscription: result.subscription,
+        avatarUrl: result.avatarUrl
       }
     })
   } catch (e) {

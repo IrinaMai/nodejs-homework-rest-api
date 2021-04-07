@@ -4,7 +4,7 @@ require('dotenv').config()
 const fs = require('fs').promises
 const path = require('path')
 const multer = require('multer')
-const { DB_URL, CLOUD_NAME, API_KEY, API_SECRET, UPLOAD, IMG } = process.env
+const { DB_URL, UPLOAD, IMG } = process.env
 
 const UPLOAD_DIR = path.join(process.cwd(), UPLOAD)
 const PUBLIC_DIR = path.join(process.cwd(), IMG)
@@ -18,22 +18,6 @@ const storage = multer.diskStorage({
   }
 })
 
-// const upload = multer({
-//   storage: storage
-//   // limits: 2000000,
-// //   fileFilter: (req, file, cb) => {
-// //   if(file.mimetype.includes("image")) {
-// //   cb(null, true)
-// //   }
-// //   cb(null, false)
-// // }
-//  })
-
-// app.post("/api/upload" , upload.single('file'), async(req, res, next) => {
-//   console.log(req.file)
-//   console.log(req.body)
-//   res.redirect('/')
-// })
 
 const PORT = process.env.PORT || 3000
 
