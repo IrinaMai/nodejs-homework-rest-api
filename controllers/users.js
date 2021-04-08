@@ -1,5 +1,5 @@
 const User = require('../servise/schemas/users');
-const jimp = require('jimp');
+// const jimp = require('jimp');
 const fs = require('fs').promises
 const path = require('path');
 const { addUser, findUserByEmail, findUserById, findUserAndUpdate } = require('../servise/users');
@@ -95,13 +95,14 @@ try {
       });
     } else {
     if(req.file) {
-    const img = await jimp.read(req.file.path);
-    await img.autocrop().cover(250, 250, jimp.HORIZONTAL_ALIGN_CENTER || jimp.VERTICAL_ALIGN_MIDDLE ).writeAsync(req.file.path);
-    await fs.rename(req.file.path,  path.join(PUBLIC_DIR, req.file.originalname));
-   res.json({status: "success", code: 200, data: user.avatarUrl});
+  //   const img = await jimp.read(req.file.path);
+  //   await img.autocrop().cover(250, 250, jimp.HORIZONTAL_ALIGN_CENTER || jimp.VERTICAL_ALIGN_MIDDLE ).writeAsync(req.file.path);
+  //   await fs.rename(req.file.path,  path.join(PUBLIC_DIR, req.file.originalname));
+  //  res.json({status: "success", code: 200, data: user.avatarUrl});
+  console.logr(req.file);
 }}
 } catch (e) {
-  next(e)
+  next(e);
 }
 };
 
