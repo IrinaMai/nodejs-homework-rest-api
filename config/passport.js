@@ -25,7 +25,8 @@ passport.use(
 
 const isLogged = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
-    if (!user || err || !req.headers.authorization.includes(user[0].token)) {
+//    if (!user || err || !req.headers.authorization.includes(user[0].token)) {
+      if (!user || err ) {
       return res.status(401).json({
         status: 'error',
         code: 401,

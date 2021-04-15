@@ -8,7 +8,7 @@ const logInUser = async (req, res, next) => {
   const { userEmail, password } = req.body
   const user = await findUserByEmail({ userEmail })
 
-  if (!user || !user.getPassword(password)) {
+  if (!user || !user.getPassword(password) || !user.verify ) {
     return res.status(401).json({
       status: 'error',
       code: 401,

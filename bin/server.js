@@ -44,8 +44,8 @@ const createFolder = async (folder) => {
 connection
   .then(() => {
     app.listen(PORT, async () => {
-      createFolder(UPLOAD_DIR);
-      createFolder(PUBLIC_DIR);
+     await createFolder(UPLOAD_DIR);
+      // createFolder(PUBLIC_DIR);
       console.log(
         `Server running. Use API on port: ${PORT}. Database connection successful`
       );
