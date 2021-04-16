@@ -1,26 +1,27 @@
-const jwt = require('jsonwebtoken')
-const { findUserByEmail, findUserAndUpdate } = require('../servise/users')
-const dotenv = require('dotenv')
-dotenv.config()
-const { SECRET_KEY } = process.env
+const jwt = require('jsonwebtoken');
+const { findUserByEmail, findUserAndUpdate } = require('../servise/users');
+const dotenv = require('dotenv');
+dotenv.config();
+const { SECRET_KEY } = process.env;
+const User = require('../servise/users')
 
 const logInUser = async (req, res, next) => {
-  const { userEmail, password } = req.body
-  const user = await findUserByEmail({ userEmail })
+  const { userEmail, password } = req.body;
+  const user = await findUserByEmail({userEmail});
+  console.log(user);
 
   if (!user || !user.getPassword(password) || !user.verify ) {
     return res.status(401).json({
       status: 'error',
       code: 401,
       message: 'Email or password is wrong'
-    })
-  };
-
+    });
+  }
   try {
-    const payload = { _id: user.id }
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
+    const payload = { _id: user.id };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
 
-    const result = await findUserAndUpdate(user.id, { token })
+    const result = await findUserAndUpdate(user.id, { token });
     res.json({
       status: 'success',
       code: 200,
@@ -30,11 +31,11 @@ const logInUser = async (req, res, next) => {
         subscription: result.subscription,
         avatarUrl: result.avatarUrl
       }
-    })
+    });
   } catch (e) {
-    next(e)
+    next(e);
   }
-}
+};
 
 const logOutUser = async (req, res, next) => {
   const { _id } = req.user[0]

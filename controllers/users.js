@@ -117,9 +117,12 @@ const pathFile = req.file.path;
 
 
 const verify = async (req, res, next) => {
-  const {verificationToken} = req.params
+  const {verificationToken} = req.params;
+  const {userEmail} = req.body;
+  // console.log(userEmail)
   const result = await findUserByEmail({verifyToken: verificationToken});
   if(result) {
+  if(result.userEmail === userEmail) {
    await result.updateOne({verify: true, verifyToken: null})
    res.json({
       status: 'success',
@@ -135,6 +138,12 @@ const verify = async (req, res, next) => {
       code: 401, 
     message: "Not authorized"
     })}
+  } else { res.status(401).json({
+       status: 'error',
+      code: 401, 
+    message: "Not authorized"
+    })}
+
 };
 
 const resendToken = async (req, res, next) => {
