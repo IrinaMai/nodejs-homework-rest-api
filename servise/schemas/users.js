@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose')
-const bCrypt = require('bcryptjs')
-const gravatar = require('gravatar')
+const { Schema, model } = require('mongoose');
+const bCrypt = require('bcryptjs');
+const gravatar = require('gravatar');
 
 const userSchema = new Schema({
   userName: {
@@ -17,7 +17,7 @@ const userSchema = new Schema({
     maxlength: 50,
     validate (value) {
       const check = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-      return check.test(value)
+      return check.test(value);
     }
   },
   password: {
@@ -51,14 +51,14 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Verify token is required'],
   },
-})
+});
 
 userSchema.methods.setPassword = function (password) {
-  this.password = bCrypt.hashSync(password, bCrypt.genSaltSync(6))
-}
+  this.password = bCrypt.hashSync(password, bCrypt.genSaltSync(6));
+};
 userSchema.methods.getPassword = function (password) {
-  return bCrypt.compareSync(password, this.password)
-}
+  return bCrypt.compareSync(password, this.password);
+};
 
-const User = model('user', userSchema)
-module.exports = User
+const User = model('user', userSchema);
+module.exports = User;

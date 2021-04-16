@@ -1,10 +1,10 @@
-const passport = require('passport')
-const passportJWT = require('passport-jwt')
-const dotenv = require('dotenv')
-dotenv.config()
-const { SECRET_KEY } = process.env
-const User = require('../servise/schemas/users')
-const { ExtractJwt, Strategy } = passportJWT
+const passport = require('passport');
+const passportJWT = require('passport-jwt');
+const dotenv = require('dotenv');
+dotenv.config();
+const { SECRET_KEY } = process.env;
+const User = require('../servise/schemas/users');
+const { ExtractJwt, Strategy } = passportJWT;
 
 const jwtOptions = {
   secretOrKey: SECRET_KEY,
@@ -25,8 +25,8 @@ passport.use(
 
 const isLogged = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
-//    if (!user || err || !req.headers.authorization.includes(user[0].token)) {
-      if (!user || err ) {
+   if (!user || err || !req.headers.authorization.includes(user[0].token)) {
+      // if (!user || err ) {
       return res.status(401).json({
         status: 'error',
         code: 401,

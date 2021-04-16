@@ -3,13 +3,13 @@ const { findUserByEmail, findUserAndUpdate } = require('../servise/users');
 const dotenv = require('dotenv');
 dotenv.config();
 const { SECRET_KEY } = process.env;
-const User = require('../servise/users')
+// const User = require('../servise/users');
+// const bCrypt = require('bcryptjs');
 
 const logInUser = async (req, res, next) => {
   const { userEmail, password } = req.body;
   const user = await findUserByEmail({userEmail});
-  console.log(user);
-
+  // console.log(user.getPassword(password))
   if (!user || !user.getPassword(password) || !user.verify ) {
     return res.status(401).json({
       status: 'error',
@@ -18,7 +18,7 @@ const logInUser = async (req, res, next) => {
     });
   }
   try {
-    const payload = { _id: user.id };
+     const payload = { _id: user.id };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
 
     const result = await findUserAndUpdate(user.id, { token });
