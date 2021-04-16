@@ -7,9 +7,10 @@ module.exports = {
     'standard'
   ],
   parserOptions: {
-    "ecmaVersion": 8,
+    ecmaVersion: 8,
     sourceType: 'module'
   },
   rules: {
+    semi: [2, "never"],
   }
 };
